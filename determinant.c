@@ -9,34 +9,33 @@
 
 float determinant(int n){
 	float a[n][n],fact,det=1,t[n],f;
-	int i,j,k,r,d;
+	int i,j,k;
 	printf("Enter the elements of %d by %d matrix:\n ",n,n);
-	//populating the matrix
+	
+    //populating the matrix
 	for( i = 0; i < n; i++ )
 		for( j = 0; j < n; j++ ){
 			printf("a[%d][%d]: ",i,j);
 			scanf("%f" , &f);
-			
 			a[i][j] = f ;
-		
-	}
+        }
 
 	//Performing Gaussian elimination
 	for( i = 0; i < n; i++ ){
 		k = i;
 		
-		while(k < n-1){
+        while(k < n-1){
 			
 			fact = a[k+1][i] / a[i][i];
 			
 			for(j = 0; j < n ; j++){
 				t[j] = a[i][j] * fact;
-				
-			}
+				}
+            
 			for(j = 0; j < n ; j++){
 				a[k+1][j] = a[k+1][j] - t[j] ;
-				
-			}
+				}
+            
 			k++;
 		}
 
@@ -55,6 +54,7 @@ float determinant(int n){
 
 
 int main(){
+    
 	int n;
 	printf("Enter the size of the matrix: ");
 	scanf("%d",&n);
