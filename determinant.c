@@ -8,8 +8,8 @@
 #include <stdio.h>
 
 float determinant(int n){
-	float a[n][n],fact,det=1,t[n],f;
-	int i,j,k;
+	float a[n][n],fact,det=1,t[n],f,temp;
+	int i,j,k,swap=0;
 	printf("Enter the elements of %d by %d matrix:\n ",n,n);
 	
     //populating the matrix
@@ -19,7 +19,20 @@ float determinant(int n){
 			scanf("%f" , &f);
 			a[i][j] = f ;
         }
-
+	
+	//swap the rows if the first element is a zero
+	if(a[0][0] == 0){
+	i=0;
+	while((a[0][0] == 0) && i<n){
+		for(j=0; j<n; j++){
+				temp= a[0][j];
+				a[0][j] = a[i+1][j];	
+				a[i+1][j]	= temp;	
+			}
+		i++;
+		swap++;
+		}
+	}
 	//Performing Gaussian elimination
 	for( i = 0; i < n; i++ ){
 		k = i;
@@ -47,7 +60,9 @@ float determinant(int n){
 			det *= a[i][i];
 		}
 
-
+	if(swap % 2 == 1) {
+		det *= -1;
+	}
 	return det;
 
 }
