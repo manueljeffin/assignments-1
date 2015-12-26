@@ -10,9 +10,9 @@
 //This function prints the matrix
 
 void dispMat(int *a,int m){
-	int i,j;
+	int i,j,msq=m*m;
 
-	for(i=0;i<(m*m);i++){
+	for(i=0;i<msq;i++){
 		
 			printf("%d ",*(a+i));
 		if((i+1)%m == 0)
