@@ -1,16 +1,26 @@
 /**
 *
-*Tranpose of a matrix 
+*Tranpose of a square matrix using pointers
 *
 *
 **/
 
 #include <stdio.h>
+#include <stdlib.h>
 
-//This function prints the matrix
+//Function for swapping two numbers
+void swap(int *a,int *b){
+    int t;
+    t = *a;
+    *a = *b;
+    *b=t;
+}
+
+//Function for printing a matrix
 
 void dispMat(int *a,int m){
-	int i,j,msq=m*m;
+	int i,j;
+    int msq = m*m;
 
 	for(i=0;i<msq;i++){
 		
@@ -25,33 +35,44 @@ void dispMat(int *a,int m){
 //This function generates the matrix n finds its transpose
 
 void transpose(int m){
-	int a[m][m];
-	int i,j,t;
+	int val,msq=m*m,count;
+    int *a = malloc(msq*sizeof(int));
+	int iterator,t,rowshifter,colshifter;
 	
 	printf("Enter the elements of the given matrix\n");
 	
-	for(i=0;i<m;i++){
-		for(j=0;j<m;j++){
-			
-			scanf("%d",&a[i][j]);
-		}
-	}
+	for(iterator=0;iterator<msq;iterator++){
+        scanf("%d",(a+iterator));
+        }
 	
 	printf("The given matrix...\n");
 	dispMat(a,m);
+    
+    colshifter=0;
+    rowshifter=colshifter;
+    iterator=0;
+    
+	while(iterator< msq){
+        if(rowshifter < msq){
+            if( iterator%m > colshifter){
+                swap((a+iterator),(a+rowshifter));
+            }
+            rowshifter+=m;
+            iterator++;
+        }
+        else{
+            colshifter++;
+            rowshifter = colshifter;
+            if( iterator%m > colshifter){
+                 swap((a+iterator),(a+rowshifter));
+            }
+            rowshifter+=m;
+            iterator++;
+            }
+    }
 	
-	for(i=0;i<m ;i++){
-		for(j=i;j<m;j++){
-			t = a[i][j];
-			a[i][j] = a[j][i];
-			a[j][i] = t;
-			
-		}
-	}
-	printf("The transpose is...\n");
+    printf("The transpose is...\n");
 	dispMat(a,m);
-	
-
 	
 }
 
