@@ -2,7 +2,18 @@
 *
 * Program to print the martix in spiral
 *
+*
+*
+* Ex. If we give a matrix like the one below as input
+*
+* | 1 2 3 |
+* | 4 5 6 |
+* | 7 8 9 |
+*
+* an output 1 2 3 6 9 8 7 4 5 should be printed
+*
 */
+
 #include <stdio.h>
 
 void spiral (int m,int n){
