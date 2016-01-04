@@ -1,5 +1,12 @@
+/*
+*
+* Triangle Patterns
+*
+*/
+
 #include <stdio.h>
 
+//Linear Triangle
 void linear(int order){
 	int i,number=1,j;
 	printf("The linear growing triangle is...\n");
@@ -12,6 +19,7 @@ void linear(int order){
 
 }
 
+//Even and Odd Switch triangle
 void even_odd_switch(int order){
 	int i,number=1,buffer[2],j;
 	printf("The even/odd switching triangle is...\n");
@@ -33,12 +41,33 @@ void even_odd_switch(int order){
 	}
 }
 
+//Pascal's Triangle
+void pascal(int order){
+	int a[order][order],i,j,orderminus=order-1;
+	printf("The pascal's triangle is...\n");
+	for(i=0; i<order; i++){
+		a[i][0]=1;
+		a[i][i]=1;
+	}
+	for(i=2;i<order;i++){
+		for(j=1;j<i;j++){
+			a[i][j]=a[i-1][j-1]+a[i-1][j];
+		}
+	}
+	for(i=0;i<order;i++){
+		for(j=0;j<=i;j++){
+			printf("%d ",a[i][j]);
+		}
+		printf("\n");
+	}
+}
 
 
 int main(){
 	int order;
 	printf("Enter the order\n");
 	scanf("%d",&order);
-	even_odd_switch(order);
 	linear(order);
+	even_odd_switch(order);
+	pascal(order);
 }
