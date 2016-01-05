@@ -1,9 +1,3 @@
-/*
-*
-* Triangle Patterns
-*
-*/
-
 #include <stdio.h>
 
 //Linear Triangle
@@ -41,18 +35,25 @@ void even_odd_switch(int order){
 	}
 }
 
-//Pascal's Triangle
+//Pascal Triangle
 void pascal(int order){
 	int a[order][order],i,j,orderminus=order-1;
 	printf("The pascal's triangle is...\n");
-	for(i=0; i<order; i++){
-		a[i][0]=1;
-		a[i][i]=1;
+	
+	if(order >= 2){
+		a[0][0]=1;
+		a[1][0]=1;
+		a[1][1]=1;
+	}else{
+		a[0][0]=1;
 	}
+	
 	for(i=2;i<order;i++){
+		a[i][0]=1;
 		for(j=1;j<i;j++){
 			a[i][j]=a[i-1][j-1]+a[i-1][j];
 		}
+		a[i][j]=1;
 	}
 	for(i=0;i<order;i++){
 		for(j=0;j<=i;j++){
