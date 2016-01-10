@@ -34,7 +34,7 @@ void combination(int n){
             i/=2;
             j++;
         }
-        //for(i=0;i<n;i++){printf("%d ",bin[0] );}printf("\n");
+        
         for(i=0;i<n;i++){ 
             if(bin[i]!=0){
                 printf("%d ",a[i]); 
