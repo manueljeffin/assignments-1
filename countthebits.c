@@ -22,7 +22,11 @@ int main(){
 	int num;
 	printf("Enter the decimal number: ");
 	scanf("%llu",&n);
+	if (n == 0){
+		num = 1;
+	}else{
 	num  = countthebits(n);
+	}
 	printf("Number of digits required : %d\n",num);
 	return 0;
 }
