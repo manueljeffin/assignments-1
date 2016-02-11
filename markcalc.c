@@ -1,163 +1,116 @@
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-// Function to get numberoflines in a file.
-int getnumoflines(char *a){
-	FILE* myfile = fopen(a, "r");
-	int ch, number_of_lines = 0;
-
-	do 
-	{
-	    ch = fgetc(myfile);
-	    if(ch == '\n')
-	    	number_of_lines++;
-	} while (ch != EOF);
+/* Marks of different subjects made into a single array since the name of the subjects might change.*/
 
 
-	if(ch != '\n' && number_of_lines != 0) 
-	    number_of_lines++;
+struct Student
+{
+    char stdname[27];
+    int s_no,marks[5],isHighest[5];
+    
+} *s;
 
-	fclose(myfile);
-	return number_of_lines;
+char sub_names[5][20];
+
+float avg_mark[5];
+
+void highestMark(int n){
+    int i,j,k,index,l,t,max,maxMark;
+    for(j=0;j<5;j++){
+        max = 0;
+        maxMark = s[0].marks[j];
+        for(i=0;i<n;i++){
+            for(k=i;k<n;k++){
+                if(s[max].marks[j]<s[k].marks[j]){
+                    max=k;
+                    maxMark = s[k].marks[j];
+                }
+            }
+        }
+        for(l=0;l<n;l++){
+            if(maxMark == s[l].marks[j]){
+                s[l].isHighest[j] = 1;
+            }else{
+                s[l].isHighest[j] = 0;
+            }
+        }
+    }
 }
 
-float avgmark(int n,int sub[]){
-	float avg;
-	int i,sum=0;
-	for(i=0;i<n;i++){
-		sum+=sub[i];
-		//printf("sub: %d\n",sub[i] );
-	}
-	avg = (sum * 1.0) / n;
-	return avg;
+void avg(int n){
+    int i,j,k;
+    float sum = 0;
+    for(i = 0;i < 5;i++){
+        sum = 0;
+        for(j = 0 ; j < n; j++){
+            sum += s[j].marks[i];
+        }
+        avg_mark[i] = (sum * 1.0)/n;
+    }
 }
 
-void maxofsub(int n,int sub[],char std[][20],char *sname){
-	int i,max=sub[0];
-	//max mark
-	for(i=0;i<n;i++){
-		if(max < sub[i]){
-			max = sub[i];
-		}
-	}
-	printf("Students who have scored the maximum mark in %s is..\n",sname);
-	for(i=0;i<n;i++){
-		if (max == sub[i]){
-			printf("%s\n",std[i]);
-		}
-	}
-}
 int main()
 {
-   int n = getnumoflines("std.csv");
-   FILE * fp = fopen("std.csv","r");
-   int a,b,c,i,j,nm;
-   int eng[n],mat[n],cse[n],elec[n],ntw[n],sno[n];
-   char  stdname[n][20];
-   char *line,*token;
-   float avg;
-   /* walk through other tokens */
-   i=1;j=0;
-   fscanf(fp,"%s",line);
-   while(!feof(fp)){
-   		fscanf(fp,"%s",line);
-   		token = strtok(line,",");
-   		i = 1;
-   		while( token != NULL ) {	
-		      //printf( " %s\n", token );
-		      if(i == 1){
-		      	/*This just fetches the serial number ... we may 
-		      	want to store this if it is 
-		      	without pattern(2,3,1,4,..) 
-		      	but here it is (1,2,3...)*/
-		      }
-		      if(i == 2){
-		      	strcpy(stdname[j], token);
-		      	//printf("%s\n",stdname[j] );
-		      }
-		      if(i == 3){
-		      	 a = token[0] - 48;
-		      	 b = token[1] - 48 ;
-		      	c = token[2] - 48;
-		      	//If the mark is 100
-		      	if(c >= 0 && c <=9 ){
-		      		 nm = a * 100 + b * 10 +c;
-		      	}else{
-		      		nm = a * 10 + b;
-		      	}
-		      	eng[j] = nm;
-		      	//printf("Eng: %d\n",eng[j]);
-		      }
-		      if(i == 4){
-		      	 a = token[0] - 48;
-		      	 b = token[1] - 48 ;
-		      	c = token[2] - 48;
-		      	if(c >= 0 && c <=9){
-		      		 nm = a * 100 + b * 10 +c;
-		      	}else{
-		      		nm = a * 10 + b;
-		      	}
-		      	mat[j] = nm;
-		      	//printf("%d\n",nm);
-		      }
-		      if(i == 5){
-		      	 a = token[0] - 48;
-		      	 b = token[1] - 48 ;
-		      	c = token[2] - 48;
-		      	if(c >= 0 && c <=9){
-		      		 nm = a * 100 + b * 10 +c;
-		      	}else{
-		      		nm = a * 10 + b;
-		      	}
-		      	cse[j] = nm;
-		      	//printf("%d\n",nm);
-		      }
-		      if(i == 6){
-		      	 a = token[0] - 48;
-		      	 b = token[1] - 48 ;
-		      	c = token[2] - 48;
-		      	if(c >= 0 && c <=9){
-		      		 nm = a * 100 + b * 10 +c;
-		      	}else{
-		      		nm = a * 10 + b;
-		      	}
-		      	elec[j] = nm;
-		      	//printf("%d\n",nm);
-		      }
-		      if(i == 7){
-		      	 a = token[0] - 48;
-		      	 b = token[1] - 48 ;
-		      	 c = token[2] - 48;
-		      	if(c >= 0 && c <=9){
-		      		 nm = a * 100 + b * 10 +c;
-		      	}else{
-		      		nm = a * 10 + b;
-		      	}
-		      	ntw[j] = nm;
-		      	//printf("%d\n",nm);
-		      }
-		      token = strtok(NULL, ",");
-		      i++;
-		   }
-		   j++;
-   }
-
-   avg = avgmark(n-1,eng);
-   printf("Avg mark in English: %f\n",avg);
-   avg = avgmark(n-1,mat);
-   printf("Avg mark in Math: %f\n",avg);
-   avg = avgmark(n-1,cse);
-   printf("Avg mark in Cse: %f\n",avg);
-   avg = avgmark(n-1,elec);
-   printf("Avg mark in Elec: %f\n",avg);
-   avg = avgmark(n-1,ntw);
-   printf("Avg mark in Ntw: %f\n",avg);
-
-   maxofsub(n-1,eng,stdname,"English");
-   maxofsub(n-1,mat,stdname,"Math");
-   maxofsub(n-1,cse,stdname,"Cse");
-   maxofsub(n-1,elec,stdname,"Electronics");
-   maxofsub(n-1,ntw,stdname,"Networks");
-  
-   return(0);
+    int n = 0;
+    FILE * fp;
+    fp = fopen("std.csv","r");
+    char *line;
+    char c,traverser[7][20];
+    int i,j;
+    
+    if(fp!=NULL){
+        while( (c = fgetc(fp)) != EOF){
+            if(c == '\n'){
+                n++;
+            }
+        }
+        
+        printf("%d\n",n );
+        rewind(fp);
+        
+        s = (struct Student *)malloc(sizeof(struct Student *) * (n));
+        
+        i=1;j=0;
+        for(i=0;i<7;i++){
+            fscanf(fp,"%[^,\n],",traverser[i]);
+            if(i>1){
+                strcpy(sub_names[i-2] , traverser[i]);
+            }
+            printf("%s\n",traverser[i] );
+        }
+        for(i=0;i<n;i++){
+            fscanf(fp, "%d,%[^,],%d,%d,%d,%d,%d", &s[i].s_no, s[i].stdname,
+                   &s[i].marks[0], &s[i].marks[1], &s[i].marks[2],
+                   &s[i].marks[3], &s[i].marks[4]);
+            
+        }
+        
+        
+        highestMark(n);
+        avg(n);
+        
+        printf("Average Marks are....\n");
+        
+        for(i=0;i<5;i++){
+            printf("%s = %f\n", sub_names[i] ,avg_mark[i] );
+        }
+        
+        printf("Students who have secured the highest mark....\n");
+        
+        for(i=0;i<n;i++){
+            for ( j = 0; j < 5; ++j)
+            {
+                if(s[i].isHighest[j] == 1){
+                    printf("%s has scored the highest mark in %s\n", s[i].stdname,sub_names[j]);
+                }
+            }
+        }
+        
+        
+    }
+    
+    free(s);
+    return 0;
 }
