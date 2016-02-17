@@ -17,7 +17,7 @@ int digitize(int n){
 
 
 void numspell(int n){
-    int pow_10,rem,prev=0,val,init=1,numd,i;
+    int pow_10,rem,prev=0,init=1,numd,i;
     char numwrd1[][12]={"zero","one","two",
         "three","four","five",
         "six","seven","eight",
@@ -30,13 +30,13 @@ void numspell(int n){
         "eighty","ninety"};
     char pow_10_wrd [][12]= {"hundred","thousand"};
     pow_10 = digitize(n);
-    int a[pow_10],j,len;
+    int a[pow_10],j,len,power=1,prev_power=1;
     for(i=1;i<=pow_10;i++){
-        rem = n % (int)pow(10,i);
-        val = (rem - prev) / (int)pow(10,i-1);
+        prev_power=power;
+        power *= 10;
+        rem = n % power;
+        a[i-1] = (rem - prev) / prev_power;
         prev = rem;
-        a[i-1] = val;
-        //printf("a[%d]: %d\n",i-1, a[i-1]);
     }
     for(i=pow_10-1;i>=0;i--){
         //printf("i::%d\n",i );
