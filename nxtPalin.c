@@ -10,18 +10,21 @@ int digitize(int n){
 	return i+1;
 }
 int nxtPalin(int n){
-	int i,p=0,palin=n,pow_10,pf=0,rem,prev,val;
+	int i,p=0,palin=n,pow_10,pf=0,rem,prev;
+	int power=1,prev_power=1;
 	
 	while(pf != 1){
 		pow_10 = digitize(palin);
 		int a[pow_10+1];
 		prev = 0;
+		power=1;prev_power=1;
 		for(i=1;i<=pow_10;i++){
-			rem = palin % (int)pow(10,i);
-			val = (rem - prev) / (int)pow(10,i-1);
-			prev = rem;
-			a[i-1] = val;
-			
+			prev_power=power;
+        	power *= 10;
+        	rem = palin % power;
+        	//printf("%d\n",power );
+        	a[i-1] = (rem - prev) / prev_power;
+        	prev = rem;
 		}
 		for(i=0;i<pow_10/2;i++){
 			if(a[i] != a[pow_10 -1 -i]){
