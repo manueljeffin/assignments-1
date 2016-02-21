@@ -3,45 +3,45 @@
 
 // for testing with different inputs modify the insert statements in main()
 
-typedef struct Node * List;
+//typedef struct Node * List;
 
 struct Node{
     int data;
-    List next;
+    struct Node * next;
 };
 
-List createList(){
-    List l = (List)malloc(sizeof(struct Node));
+struct Node * createList(){
+    struct Node * l = (struct Node *)malloc(sizeof(struct Node));
     l->next = NULL;
     return l;
 }
 
-int isEmpty( List l ){
+int isEmpty( struct Node * l ){
     return l->next == NULL;
 }
 
-void insert (List l,int data){
-    List t = (List)malloc(sizeof(struct Node));
+void insert (struct Node * l,int data){
+    struct Node * t = (struct Node *)malloc(sizeof(struct Node));
     t->next = l->next;
     t->data = data;
     l->next = t;
 }
 
-void Display(List l){
+void Display(struct Node * l){
     if(!isEmpty(l)){
         l=l->next;
-        printf("Displaying List::");
+        printf("Displaying struct Node *::");
         while(l!=NULL){
             printf("%d",l->data );
             l=l->next;
         }
     }else{
-        printf("The list is empty\n");
+        printf("The struct Node * is empty\n");
     }
     printf("\n");
 }
 
-int listLen(List l){
+int listLen(struct Node * l){
     int len = 0;
     while(l->next!=NULL){
         l=l->next;
@@ -52,11 +52,11 @@ int listLen(List l){
 
 
 
-List add(List l,List m,int lenL,int lenM){
+struct Node * add(struct Node * l,struct Node * m,int lenL,int lenM){
     int i,j,k,num1,num2,carry=0,dsum=0,tsum;
-    List tt = createList();
+    struct Node * tt = createList();
     for(i=lenL,k=lenM;k>0;i--,k--){
-        List t = l;
+        struct Node * t = l;
         j = i;
         while(j>0){
             t = t->next;
@@ -78,7 +78,7 @@ List add(List l,List m,int lenL,int lenM){
     
     int diff = lenL - lenM;
     for(i = diff;i>0;i--){
-        List t = l;
+        struct Node * t = l;
         j = i;
         while(j>0){
             t = t->next;
@@ -96,9 +96,9 @@ List add(List l,List m,int lenL,int lenM){
     return tt;
 }
 int main(int argc, char* argv[]){
-    List l = createList();
-    List m = createList();
-    List sum;
+    struct Node * l = createList();
+    struct Node * m = createList();
+    struct Node * sum;
     insert(l,6);
     insert(l,6);
     insert(m,6);
