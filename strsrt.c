@@ -5,7 +5,7 @@ int main(){
     char *str[9] = {"1234","412","12","7","5","21","12","1","99"},*temp;
     int i,j,k,mazSize,m;
     m = 9; //Number of Strings
-    mazSize = 4; //Maximum length of a string
+    mazSize = 4; //Maximum length string
     printf("Before sorting...\n");
     for(i=0;i<m;i++){
         printf("%s ", str[i] );
