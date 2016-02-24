@@ -10,9 +10,8 @@ struct Stud{
 };
 
 /*
-	Values are directly accessed in total_compute() and
-	cutoff_compute() instead of retrieving them using loop
-	inorder save time
+	Values are directly accessed in total_compute() and cutoff_compute() instead of retrieving them using loop
+	inorder to save time
 */
 
 void total_compute(struct Stud s[], int i){
