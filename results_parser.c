@@ -82,12 +82,12 @@ int main(){
 		i++;
 	}
 
-	fprintf(fp1, "Rank,     Name,Cutoff, Total, Result, Maths, Physics, Chemistry, Language 1, Language2\n");
+	
 
 	for(i=0;i<15;i++){
 		if(s[i].res == 'p'){
 			printf("Rank:%d Name:%s\n", i+1, s[i].name);
-			fprintf(fp1, "%4d,%9s,%.2f,%6d,%6c,%6d,%8d,%11d,%11d,%9d\n",i+1,s[i].name,s[i].cutoff,s[i].total,
+			fprintf(fp1, "%d,%s,%f,%d,%c,%d,%d,%d,%d,%d\n",i+1,s[i].name,s[i].cutoff,s[i].total,
 				s[i].res,s[i].marks[0],s[i].marks[1],s[i].marks[2],s[i].marks[3],s[i].marks[4]);
 		}
 		
