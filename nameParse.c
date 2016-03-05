@@ -17,11 +17,11 @@ int main(){
 	char str[5][50],num[10],nm[30];
 	int i,j,k,l,len,cnt=1;
 	struct name * nme;
-	struct result tmp[5];
+	struct result res[5];
 	for(i=0;i<5;i++){
-		tmp[i].name[0]='\0';
-		tmp[i].count=0;
-		tmp[i].index[0]='\0';
+		res[i].name[0]='\0';
+		res[i].count=0;
+		res[i].index[0]='\0';
 	}
 	nme = (struct name *)malloc(sizeof(struct name)*5);
 	for(i=0;i<5;i++){
@@ -54,36 +54,36 @@ int main(){
 		if(j>=0){
 			l=k-1;
 			while(l>=0){
-				if(strcmp(tmp[l].name,nme[i].name) == 0 ){
-					tmp[l].index[tmp[l].count]=nme[i].sno;
-					tmp[l].count++;
+				if(strcmp(res[l].name,nme[i].name) == 0 ){
+					res[l].index[res[l].count]=nme[i].sno;
+					res[l].count++;
 					cnt = 0;
 					break;
 				}
 				l--;
 			}
 			if(cnt != 0){
-				strcpy(tmp[k].name,nme[i].name);
-				tmp[k].index[tmp[k].count]=nme[i].sno;
-				tmp[k].count++;
+				strcpy(res[k].name,nme[i].name);
+				res[k].index[res[k].count]=nme[i].sno;
+				res[k].count++;
 				k++;
 			}
 			
 		}else{
 			j++;
-			strcpy(tmp[k].name , nme[i].name);
-			tmp[k].index[tmp[k].count]=nme[i].sno;
-			tmp[k].count++;
+			strcpy(res[k].name , nme[i].name);
+			res[k].index[res[k].count]=nme[i].sno;
+			res[k].count++;
 			k++;
 		}
 		cnt = 1;
 		
 	}
 	for(i=0;i<k;i++){
-		printf("%s,",tmp[i].name);
-		printf("%d,[%d",tmp[i].count,tmp[i].index[0] );
-		for(l=1;l<tmp[i].count;l++){
-			printf(",%d",tmp[i].index[l]);
+		printf("%s,",res[i].name);
+		printf("%d,[%d",res[i].count,res[i].index[0] );
+		for(l=1;l<res[i].count;l++){
+			printf(",%d",res[i].index[l]);
 		}
 		printf("]\n");
 	}
