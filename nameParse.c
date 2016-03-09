@@ -21,7 +21,7 @@ int main(){
 	for(i=0;i<5;i++){
 		res[i].name[0]='\0';
 		res[i].count=0;
-		res[i].index[0]='\0';
+		//res[i].index[0]='\0';
 	}
 	nme = (struct name *)malloc(sizeof(struct name)*5);
 	for(i=0;i<5;i++){
