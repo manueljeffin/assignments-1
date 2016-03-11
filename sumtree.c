@@ -72,11 +72,11 @@ int main(){
 	node->right->right = makeNode(3);
 
 	/*
-				20
-			  /     \
-			6		 4
-		   /   \    /  \
-		 2     4   1    3
+			     20
+			  /       \
+			6           4
+		      /   \        /  \
+		     2     4      1    3
 	*/
 
 	if(validateSumTree(node))
