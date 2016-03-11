@@ -80,9 +80,9 @@ int main(){
 	*/
 
 	if(validateSumTree(node))
-        printf("Sum Tree\n");
-    else
-        printf("Not a Sum Tree\n");
+        	printf("Sum Tree\n");
+        else
+        	printf("Not a Sum Tree\n");
 
 	return 0;
 }
