@@ -3,24 +3,24 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-struct word{
+struct wordList{
     int num_times;
     char str[30];
-    struct word * next;
+    struct wordList * next;
 };
 
 //Create a word list
-struct word * CreateList(){
-    struct word * tmp;
-    tmp = (struct word*)malloc(sizeof(struct word));
+struct wordList * CreateList(){
+    struct wordList * tmp;
+    tmp = (struct wordList*)malloc(sizeof(struct wordList));
     tmp->next = NULL;
     return tmp;
 }
 
 //Insert into a word list
-void  Insert(char *str,struct  word * wrd){
-    struct word * tmp;
-    tmp = (struct word *)malloc(sizeof(struct word));
+void  Insert(char *str,struct  wordList * wrd){
+    struct wordList * tmp;
+    tmp = (struct wordList *)malloc(sizeof(struct wordList));
     if(tmp != NULL){
         strcpy(tmp->str,str);
         tmp->num_times = 1;
@@ -30,8 +30,8 @@ void  Insert(char *str,struct  word * wrd){
 }
 
 //Find a word from a word list
-int findWord(char * word, struct word * wrd){
-    struct word * tmp;
+int findWord(char * word, struct wordList * wrd){
+    struct wordList * tmp;
     tmp = wrd->next;
     while(tmp != NULL){
         if(strcmp(word,tmp->str) == 0){
@@ -44,12 +44,12 @@ int findWord(char * word, struct word * wrd){
 }
 
 //Top 3 Common words
-void topThreeWords(struct word * wrd){
-    struct word *common_words[3];
-    struct word * tmp,* tmp1;
+void topThreeWords(struct wordList * wrd){
+    struct wordList *common_words[3];
+    struct wordList * tmp,* tmp1;
     tmp = wrd -> next;
     
-    tmp1 = (struct word *)malloc(sizeof(struct word));
+    tmp1 = (struct wordList *)malloc(sizeof(struct wordList));
     strcpy(tmp1->str,"");
     tmp1->num_times=0;
     tmp1->next=NULL;
@@ -103,7 +103,7 @@ void topThreeLetters(int letters_arr[]){
 }
 
 int main(){
-    struct word * word_list;
+    struct wordList * word_list;
     word_list = CreateList();
     int i,num_letters=0,num_words=0,num_symbols=0,pureword=1;
     int delimiter,letters_arr[26];
