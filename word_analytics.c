@@ -102,18 +102,42 @@ void topThreeLetters(int letters_arr[]){
     printf("%c occurs %d times\n",alpha[2],letters_arr[2]);
 }
 
+//Displays the words that occur only once
+void occuringOnce(struct wordList * wrd){
+    struct wordList * tmp;
+    tmp = wrd->next;
+    printf("\nWords occuring only once:\n");
+    while(tmp!=NULL){
+        if(tmp->num_times == 1){
+            printf("%s occurs only once\n",tmp->str);
+        }
+        tmp = tmp->next;
+    }
+}
+
+//Displays the letters that aren't used
+void letterUnused(int letters_arr[]){
+    int i;
+    printf("\nLetters unsued:\n");
+    for(i=0;i<26;i++){
+        if(letters_arr[i] == 0){
+            printf("%c isn't used\n", (char)(i+97) );
+        }
+    }
+}
+
 int main(){
     struct wordList * word_list;
     word_list = CreateList();
     int i,num_letters=0,num_words=0,num_symbols=0,pureword=1;
-    int delimiter,letters_arr[26];
+    int delimiter,letters_arr[26],buffer_arr[26];
     char line[255],buffer[255];
     FILE *fp;
     fp = fopen("file.txt","r");
     
     //initalising letters array
     for(i=0;i<26;i++){
-        letters_arr[i] = 0;
+        letters_arr[i] = buffer_arr[i] = 0;
     }
     
     while(!feof(fp)){
@@ -148,8 +172,13 @@ int main(){
         }
     }
     
+    for(i=0;i<26;i++){
+        buffer_arr[i] = letters_arr[i];
+    }
     topThreeWords(word_list);
     topThreeLetters(letters_arr);
+    occuringOnce(word_list);
+    letterUnused(buffer_arr);
     
     printf("\n");
     printf("Total Words:%d\nTotal Letters:%d\nTotal Symbols:%d\n\n",num_words,num_letters,num_symbols);
