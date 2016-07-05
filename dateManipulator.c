@@ -98,7 +98,7 @@ char * prevMonthWord(struct date * dt){
 
 // 6. Day in number
 
-int day(struct date *dt){
+int day(struct date *dt){ //checks for validity of day
 	int leaap;
 	int thirty_months[12]={0,0,0,1,0,1,0,0,1,0,1,0};
 	int thirty1_months[12]={1,0,1,0,1,0,1,1,0,1,0,1};
@@ -109,9 +109,9 @@ int day(struct date *dt){
 			return dt->day;
 		}else if(dt->month == 2 && dt->day >= 1 && dt->day <=28){
 			return dt->day;
-		}else if(thirty1_months[dt->month - 1] && dt->day >= 1 && dt->day <= 31){
+		}else if(thirty1_months[dt->month - 1] && dt->day >= 1 && dt->day <= 31){ //-1 is for array indexing, nothing else
 			return dt->day;
-		}else if(thirty_months[dt->month - 1] && dt->day >= 1 && dt->day <= 30){
+		}else if(thirty_months[dt->month - 1] && dt->day >= 1 && dt->day <= 30){ //-1 is for array indexing, nothing else
 			return dt->day;
 		}else{
 			printf("Invalid Date\n");
@@ -136,11 +136,11 @@ int validate(struct date * dt){
 }
 // 8. Day index of the year
 
-int dayIndex(struct date * dt){
+int dayIndex(struct date * dt){ //returns what day number of the year it is
 	int index = 0,i,mprev;
 	if(validate(dt)){
 		if(leap(dt->year)){
-			index += dt->day;
+			index += dt->day; //adding this month days and keeping it
 			mprev = dt->month - 1;
 			for(i=0;i < mprev; i++){
 				index += leapDays[i];
@@ -167,46 +167,62 @@ struct date * dateBefore(struct date * dt,int n){
 		int diff = dt->day - n;
 		struct date * tmp;
 		tmp = (struct date *)malloc(sizeof(struct date));
-		if( diff > 0){
+		if( diff > 0)
+		{ //obviously same month
 			tmp->year = dt-> year;
 			tmp->month = dt->month;
 			tmp->day= diff;
 			return tmp;
-		} else if ( diff == 0){
+		} 
+		else if ( diff == 0)
+		{ // previous month
 			int monthDiff = dt->month - 1;
-			if ( monthDiff > 0){
+			if ( monthDiff > 0)
+			{ //same year previous month
 				tmp->year = dt->year;
 				tmp->month = dt->month - 1;
-				if(leap(dt->year)){
+				if(leap(dt->year))
+				{
 					tmp->day = leapDays[tmp->month - 1];
-				}else{
+				}
+				else
+				{
 					tmp->day = Days[tmp->month - 1];
 				}
-			}else if (monthDiff == 0){
+			}
+			else if (monthDiff == 0)
+			{ //previous year previous month
 				tmp->year = prevYear(dt);
 				tmp->month = 12;
 				tmp->day = 31;
 			}
 			return tmp;
-		}else{
+		}
+		else //not same month and not previous month too, so just assign to previous month and recursively check
+		{
 			int monthDiff = dt->month - 1;
-			if ( monthDiff > 0){
+			if ( monthDiff > 0)
+			{
 				tmp->year = dt->year;
 				tmp->month = dt->month - 1;
-				if(leap(dt->year)){
+				if(leap(dt->year))
+				{
 					tmp->day = leapDays[tmp->month - 1];
-				}else{
+				}else
+				{
 					tmp->day = Days[tmp->month - 1];
 				}
-			}else if (monthDiff == 0){
+			}
+			else if (monthDiff == 0)
+			{
 				tmp->year = prevYear(dt);
 				tmp->month = 12;
 				tmp->day = 31;
 			}
-			diff *= -1;
+			diff *= -1;//very important
 			
 		}
-		return dateBefore(tmp,diff);
+		return dateBefore(tmp,diff); //recursions of india
 	}else{
 		printf("Invaild date\n");
 		exit(0);
@@ -220,9 +236,12 @@ int numberOfDays(struct date * dt){
 	int mprev,a,b;
 	if(validate(dt)){
 		mprev=month-1;
-		a = year / 4;
-		b= year - a - 1 ;
-		num = a * 366 + b * 365;
+		
+		a = year / 4; //number of leap years
+		b= year - a - 1 ;//nuber of non leap years
+		num = a * 366 + b * 365;//total number of days before this year by taking into account the number of leap years and non - leap years that would have occured before
+		
+		//adding up till previous month 
 		if(leap(year)){
 			for(i=0;i<mprev;i++){
 				num += leapDays[i];
@@ -232,7 +251,7 @@ int numberOfDays(struct date * dt){
 				num += Days[i];
 			}
 		}
-		num += day;
+		num += day;//don't forget this
 	}else{
 		printf("Invalid date\n");
 		exit(0);
@@ -253,7 +272,7 @@ int dateDifference(struct date *dt1,struct date * dt2){
 
  char * dayWord(struct date * dt){
  	char ** day = (char *[]){"Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"};
- 	int num = numberOfDays(dt)-2;
+ 	int num = numberOfDays(dt)-2; //dont't forget -2 here
  	return day[(num%7)];
  }
 
@@ -263,11 +282,14 @@ int main(int argc, char* argv[]){
 	struct date dt,*dt2;
 	printf("Enter the date\n");
 	scanf("%[^\n]",s);
+	
 	dt.year=atoi(strtok(s,"-"));
 	dt.month=atoi(strtok(NULL,"-"));
 	dt.day=atoi(strtok(NULL,"-"));
+	
 	char * str;
 	str =  dayWord(&dt);
+	
 	while(y){
 		printf("Menu..\n1. Returns the year\n");
 		printf("2. Returns the previous year\n");
